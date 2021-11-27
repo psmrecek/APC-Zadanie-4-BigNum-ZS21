@@ -1,20 +1,9 @@
 #include "bignum.h"
 #include <iostream>
+#include <sstream>
 
-//int main(int argc, char* argv[])
-int main()
+void dummy_test()
 {
-
-	//try
-	//{
-	//	const std::string c{ "+" };
-	//	BigNum num3(c);
-	//}
-	//catch (const char* e)
-	//{
-	//	std::cout << e << std::endl;
-	//}
-
 	int64_t a = +150;
 	int64_t b = 600;
 
@@ -117,7 +106,126 @@ int main()
 	std::cout << num3 << " (8)" << std::endl;
 	std::cout << num4 << " (600)" << std::endl;
 	std::cout << num5 << " (0)" << std::endl;
+}
 
+int compare_str_unary(BigNum num, int64_t exp_num, BigNum a, const char* sign)
+{
+	std::stringstream ss;
+	ss << num;
+
+	std::string expected = std::to_string(exp_num);
+
+	if (ss.str() != expected)
+	{
+		std::cout << "Returned: " << ss.str() << " Expected: " << expected << " For: " << sign << a << std::endl;
+		return 1;
+	}
+
+	return 0;
+}
+
+int compare_str(BigNum num, int64_t exp_num, BigNum a, BigNum b, const char* sign)
+{
+	std::stringstream ss;
+	ss << num;
+
+	std::string expected = std::to_string(exp_num);
+
+	if (ss.str() != expected)
+	{
+		std::cout << "Returned: " << ss.str() << " Expected: " << expected << " For: " << a << sign << b << std::endl;
+		return 1;
+	}
+
+	return 0;
+}
+
+int compare_bool(bool x, bool y, BigNum a, BigNum b, const char* sign)
+{
+	if (x != y)
+	{
+		std::cout << "Returned: " << x << " Expected: " << y << " For: " << a << sign << b << std::endl;
+		return 1;
+	}
+
+	return 0;
+}
+
+void tests(int64_t start, int64_t end, bool progress=false)
+{
+	std::cout << "---------Start of tests---------" << std::endl;
+
+	int64_t error_count = 0;
+
+	for (int64_t i = start; i < end; i++)
+	{
+		for (int64_t j = start; j < end; j++)
+		{
+			BigNum a(i);
+			BigNum b(j);
+
+			error_count += compare_str_unary(a, i, a, "");
+			error_count += compare_str_unary(b, j, b, "");
+			error_count += compare_str_unary(-a, -i, a, "-");
+			error_count += compare_str_unary(-b, -j, b, "-");
+			error_count += compare_str_unary(+a, +i, a, "+");
+			error_count += compare_str_unary(+b, +j, b, "+");
+
+			error_count += compare_str(a + b, i + j, a, b, "+");
+			error_count += compare_str(b + a, j + i, b, a, "+");
+			error_count += compare_str(a - b, i - j, a, b, "-");
+			error_count += compare_str(b - a, j - i, b, a, "-");
+			//error_count += compare_str(a * b, i * j, a, b, "*");
+			//error_count += compare_str(b * a, j * i, b, a, "*");
+			error_count += compare_bool(a == b, i == j, a, b, "==");
+			error_count += compare_bool(a != b, i != j, a, b, "!=");
+			error_count += compare_bool(a < b, i < j, a, b, "<");
+			error_count += compare_bool(a <= b, i <= j, a, b, "<=");
+			error_count += compare_bool(a > b, i > j, a, b, ">");
+			error_count += compare_bool(a >= b, i >= j, a, b, ">=");
+
+			error_count += compare_str(-a + b, -i + j, -a, b, "+");
+			error_count += compare_str(b + -a, j + -i, b, -a, "+");
+			error_count += compare_str(-a - b, -i - j, -a, b, "-");
+			error_count += compare_str(b - -a, j - -i, b, -a, "-");
+			//error_count += compare_str(-a * b, -i * j, -a, b, "*");
+			//error_count += compare_str(b * -a, j * -i, b, -a, "*");
+			error_count += compare_bool(-a == b, -i == j, -a, b, "==");
+			error_count += compare_bool(-a != b, -i != j, -a, b, "!=");
+			error_count += compare_bool(-a < b, -i < j, -a, b, "<");
+			error_count += compare_bool(-a <= b, -i <= j, -a, b, "<=");
+			error_count += compare_bool(-a > b, -i > j, -a, b, ">");
+			error_count += compare_bool(-a >= b, -i >= j, -a, b, ">=");
+
+			error_count += compare_bool(a == -b, i == -j, a, -b, "==");
+			error_count += compare_bool(a != -b, i != -j, a, -b, "!=");
+			error_count += compare_bool(a < -b, i < -j, a, -b, "<");
+			error_count += compare_bool(a <= -b, i <= -j, a, -b, "<=");
+			error_count += compare_bool(a > -b, i > -j, a, -b, ">");
+			error_count += compare_bool(a >= -b, i >= -j, a, -b, ">=");
+
+			
+			error_count += compare_str((-(-a + b + a + a - b) - (b - b + a - a - a + b - a + b)), 
+				(-(-i + j + i + i - j) - (j - j + i - i - i + j - i + j)), a, b, " special1 ");
+
+			//error_count += compare_str((-(-a * (b + a) + a - b) * (b - b + a - (a * a) + b - a + b)),
+			//	(-(-i * (j + i) + i - j) * (j - j + i - (i * i) + j - i + j)), a, b, "special2");
+			
+				
+
+		}
+		if (progress) std::cout << "Testing " << i << std::endl;
+		
+	}
+	std::cout << "Error count " << error_count << std::endl;
+	std::cout << "---------End of tests---------" << std::endl;
+}
+
+int main()
+{
+	//dummy_test();
+
+	tests(-200, 200, true);
 
 
 	return 0;

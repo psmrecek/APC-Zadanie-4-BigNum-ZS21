@@ -133,7 +133,7 @@ public:
 
         if ((m_positive && !rhs.m_positive) || (!m_positive && rhs.m_positive))
         {
-            m_number = help_sub(num1, num2);
+            m_number = help_sub(rhs);
         }
 
         return *this;
@@ -157,14 +157,30 @@ public:
         
         if ((m_positive && rhs.m_positive) || (!m_positive && !rhs.m_positive))
         {
-            m_number = help_sub(num1, num2);
+            m_number = help_sub(rhs);
         }
 
         return *this;
     }
     BigNum& operator*=(const BigNum& rhs)
     {
+        if ((m_positive && rhs.m_positive) || (!m_positive && !rhs.m_positive))
+        {
+            m_positive = true;
+        }
+        else
+        {
+            m_positive = false;
+        }
 
+        if (m_number == "0" || rhs.m_number == "0")
+        {
+            m_number = "0";
+            m_positive = true;
+            return *this;
+        }
+
+        return *this;
     }
 
 #if SUPPORT_DIVISION == 1
@@ -218,9 +234,16 @@ private:
         return result;
     }
 
-    std::string help_sub(std::string& num1, std::string& num2)
+    std::string help_sub(const BigNum& rhs)
     {
-        // todo if equal return 0
+        std::string num1{ m_number };
+        std::string num2{ rhs.m_number };
+
+        if (num1 == num2)
+        {
+            m_positive = true;
+            return "0";
+        }
 
         int64_t len1 = num1.length();
         int64_t len2 = num2.length();
@@ -266,9 +289,12 @@ private:
         int64_t carry = 0;
         char zero = '0';
 
-        for (int64_t i = len2 - 1; i >= 0; i--) {
-            int64_t intermediate = ((num1[i + diff] - zero) - (num2[i] - zero) - carry);
-            if (intermediate < 0)
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+
+        for (int64_t i = 0; i < len2; i++) {
+            int64_t intermediate = ((num1[i] - zero) - (num2[i] - zero) - carry);
+            if (intermediate < 0) 
             {
                 intermediate = intermediate + 10;
                 carry = 1;
@@ -277,26 +303,40 @@ private:
             {
                 carry = 0;
             }
+
             intermediate += zero;
             result.push_back((char)intermediate);
         }
 
-        for (int64_t i = len1 - len2 - 1; i >= 0; i--) {
-            if ((num1[i] == zero) && (carry > 0)) {
-                result.push_back('9');
-                continue;
-            }
+        for (int64_t i = len2; i < len1; i++) {
             int64_t intermediate = ((num1[i] - zero) - carry);
-            if (i > 0 || intermediate > 0)
+            if (intermediate < 0) 
             {
-                intermediate += zero;
-                result.push_back((char)intermediate);
+                intermediate = intermediate + 10;
+                carry = 1;
+            }
+            else
+            {
+                carry = 0;
             }
 
-            carry = 0;
+            intermediate += zero;
+            result.push_back((char)intermediate);
         }
 
         reverse(result.begin(), result.end());
+
+        size_t not_zero = result.find_first_not_of("0");
+        if (not_zero == std::string::npos)
+        {
+            result = "0";
+            m_positive = true;
+        }
+        else
+        {
+            result = result.substr(not_zero);
+        }
+
         return result;
     }
 };
