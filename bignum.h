@@ -223,10 +223,10 @@ public:
         return *this;
     }
 
-#if SUPPORT_DIVISION == 1
-    BigNum& operator/=(const BigNum& rhs); // bonus
-    BigNum& operator%=(const BigNum& rhs); // bonus
-#endif
+//#if SUPPORT_DIVISION == 1
+//    BigNum& operator/=(const BigNum& rhs); // bonus
+//    BigNum& operator%=(const BigNum& rhs); // bonus
+//#endif
 
 private:
     // here you can add private data and members, but do not add stuff to 

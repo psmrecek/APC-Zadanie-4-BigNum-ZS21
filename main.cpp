@@ -251,6 +251,8 @@ void operations_tests(int64_t start, int64_t end, bool progress=false)
 			error_count += _compare_str(b - a, j - i, b, a, "-");
 			error_count += _compare_str(a * b, i * j, a, b, "*");
 			error_count += _compare_str(b * a, j * i, b, a, "*");
+			error_count += _compare_bool(a == a, i == i, a, b, "==");
+			error_count += _compare_bool(b == b, j == j, a, b, "==");
 			error_count += _compare_bool(a == b, i == j, a, b, "==");
 			error_count += _compare_bool(a != b, i != j, a, b, "!=");
 			error_count += _compare_bool(a < b, i < j, a, b, "<");
@@ -283,6 +285,11 @@ void operations_tests(int64_t start, int64_t end, bool progress=false)
 
 			error_count += _compare_str((-(-a * (b + a) + a - b) * (b - b + a - (a * a) + b - a + b)),
 				(-(-i * (j + i) + i - j) * (j - j + i - (i * i) + j - i + j)), a, b, "special2");
+
+			a = -b;
+			b = -a;
+			error_count += _compare_str_unary(a, -j, a, "");
+			error_count += _compare_str_unary(b, j, b, "");
 		}
 		if (progress) std::cout << "Testing " << i << std::endl;
 	}
@@ -296,7 +303,7 @@ int main()
 
 	dummy_test();
 
-	operations_tests(-100, 100, 0);
+	operations_tests(-1000, 1000, 0);
 
 	return 0;
 }
