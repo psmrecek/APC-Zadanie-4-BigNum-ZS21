@@ -5,10 +5,10 @@
 #include <stdint.h>
 #include <iostream>
 
-#define SUPPORT_DIVISION 0 // define as 1 when you have implemented the division
-#define SUPPORT_IFSTREAM 0 // define as 1 when you have implemented the input >>
-
-// if you do not plan to implement bonus, just delete those lines
+//#define SUPPORT_DIVISION 0 // define as 1 when you have implemented the division
+//#define SUPPORT_IFSTREAM 0 // define as 1 when you have implemented the input >>
+//
+//// if you do not plan to implement bonus, just delete those lines
 class BigNum final
 {
 public:
@@ -399,10 +399,10 @@ BigNum operator*(BigNum lhs, const BigNum& rhs)
     return lhs *= rhs;
 }
 
-#if SUPPORT_DIVISION == 1
-BigNum operator/(BigNum lhs, const BigNum& rhs); // bonus
-BigNum operator%(BigNum lhs, const BigNum& rhs); // bonus
-#endif
+//#if SUPPORT_DIVISION == 1
+//BigNum operator/(BigNum lhs, const BigNum& rhs); // bonus
+//BigNum operator%(BigNum lhs, const BigNum& rhs); // bonus
+//#endif
 
 // alternatively you can implement 
 // std::strong_ordering operator<=>(const BigNum& lhs, const BigNum& rhs);
@@ -499,6 +499,6 @@ std::ostream& operator<<(std::ostream& lhs, const BigNum& rhs)
     return lhs;
 }
 
-#if SUPPORT_IFSTREAM == 1
-std::istream& operator>>(std::istream& lhs, BigNum& rhs); // bonus
-#endif
+//#if SUPPORT_IFSTREAM == 1
+//std::istream& operator>>(std::istream& lhs, BigNum& rhs); // bonus
+//#endif
