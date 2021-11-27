@@ -2,6 +2,80 @@
 #include <iostream>
 #include <sstream>
 
+void input_tests()
+{
+	int64_t error_counter = 0;
+
+	BigNum a = 1;
+	BigNum b = -2;
+
+	BigNum c(3);
+	BigNum d(-4);
+
+	BigNum e{ 5 };
+	BigNum f{ -6 };
+
+	BigNum g("7");
+	BigNum h("-8");
+	BigNum i("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+	
+	try { BigNum j("-"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum k("+"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum l("a"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum m("-b"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum n("+c"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	BigNum o("000000000000000000000");
+	BigNum p("000000000000000000000400");
+	try { BigNum q("000000000000000000000d"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	
+	BigNum r{ "7" };
+	BigNum s{ "-8" };
+	try { BigNum t{ "-" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum u{ "+" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum v{ "a" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum w{ "-b" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum x{ "+c" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	BigNum y{ "000000000000000000000" };
+	BigNum z{ "000000000000000000000400" };
+	try { BigNum aa{ "000000000000000000000d" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+
+	BigNum ab;
+	BigNum ac = 0;
+	BigNum ad(0);
+	BigNum ae{ 0 };
+	BigNum af("0");
+	BigNum ag{ "0" };
+
+	BigNum ah(+0);
+	BigNum ai{ +0 };
+	BigNum aj("+0");
+	BigNum ak{ "+0" };
+
+	BigNum al(-0);
+	BigNum am{ -0 };
+	BigNum an("-0");
+	BigNum ao{ "-0" };
+
+	try { BigNum ap(" 0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum aq("0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum ar(" +0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum as(" -0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum at("+0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum au("-0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+
+	try { BigNum av{ " 0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum aw{ "0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum ax{ " +0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum ay{ " -0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum az{ "+0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum ba{ "-0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+
+	if (error_counter != 24)
+	{
+		std::cout << "Some errors unhandled" << std::endl;
+	}
+}
+
 void dummy_test()
 {
 	int64_t a = +150;
@@ -108,7 +182,7 @@ void dummy_test()
 	std::cout << num5 << " (0)" << std::endl;
 }
 
-int compare_str_unary(BigNum num, int64_t exp_num, BigNum a, const char* sign)
+int _compare_str_unary(BigNum num, int64_t exp_num, BigNum a, const char* sign)
 {
 	std::stringstream ss;
 	ss << num;
@@ -124,7 +198,7 @@ int compare_str_unary(BigNum num, int64_t exp_num, BigNum a, const char* sign)
 	return 0;
 }
 
-int compare_str(BigNum num, int64_t exp_num, BigNum a, BigNum b, const char* sign)
+int _compare_str(BigNum num, int64_t exp_num, BigNum a, BigNum b, const char* sign)
 {
 	std::stringstream ss;
 	ss << num;
@@ -140,7 +214,7 @@ int compare_str(BigNum num, int64_t exp_num, BigNum a, BigNum b, const char* sig
 	return 0;
 }
 
-int compare_bool(bool x, bool y, BigNum a, BigNum b, const char* sign)
+int _compare_bool(bool x, bool y, BigNum a, BigNum b, const char* sign)
 {
 	if (x != y)
 	{
@@ -151,9 +225,9 @@ int compare_bool(bool x, bool y, BigNum a, BigNum b, const char* sign)
 	return 0;
 }
 
-void tests(int64_t start, int64_t end, bool progress=false)
+void operations_tests(int64_t start, int64_t end, bool progress=false)
 {
-	std::cout << "---------Start of tests---------" << std::endl;
+	std::cout << "---------Start of operations tests---------" << std::endl;
 
 	int64_t error_count = 0;
 
@@ -164,69 +238,65 @@ void tests(int64_t start, int64_t end, bool progress=false)
 			BigNum a(i);
 			BigNum b(j);
 
-			error_count += compare_str_unary(a, i, a, "");
-			error_count += compare_str_unary(b, j, b, "");
-			error_count += compare_str_unary(-a, -i, a, "-");
-			error_count += compare_str_unary(-b, -j, b, "-");
-			error_count += compare_str_unary(+a, +i, a, "+");
-			error_count += compare_str_unary(+b, +j, b, "+");
+			error_count += _compare_str_unary(a, i, a, "");
+			error_count += _compare_str_unary(b, j, b, "");
+			error_count += _compare_str_unary(-a, -i, a, "-");
+			error_count += _compare_str_unary(-b, -j, b, "-");
+			error_count += _compare_str_unary(+a, +i, a, "+");
+			error_count += _compare_str_unary(+b, +j, b, "+");
 
-			error_count += compare_str(a + b, i + j, a, b, "+");
-			error_count += compare_str(b + a, j + i, b, a, "+");
-			error_count += compare_str(a - b, i - j, a, b, "-");
-			error_count += compare_str(b - a, j - i, b, a, "-");
-			//error_count += compare_str(a * b, i * j, a, b, "*");
-			//error_count += compare_str(b * a, j * i, b, a, "*");
-			error_count += compare_bool(a == b, i == j, a, b, "==");
-			error_count += compare_bool(a != b, i != j, a, b, "!=");
-			error_count += compare_bool(a < b, i < j, a, b, "<");
-			error_count += compare_bool(a <= b, i <= j, a, b, "<=");
-			error_count += compare_bool(a > b, i > j, a, b, ">");
-			error_count += compare_bool(a >= b, i >= j, a, b, ">=");
+			error_count += _compare_str(a + b, i + j, a, b, "+");
+			error_count += _compare_str(b + a, j + i, b, a, "+");
+			error_count += _compare_str(a - b, i - j, a, b, "-");
+			error_count += _compare_str(b - a, j - i, b, a, "-");
+			error_count += _compare_str(a * b, i * j, a, b, "*");
+			error_count += _compare_str(b * a, j * i, b, a, "*");
+			error_count += _compare_bool(a == b, i == j, a, b, "==");
+			error_count += _compare_bool(a != b, i != j, a, b, "!=");
+			error_count += _compare_bool(a < b, i < j, a, b, "<");
+			error_count += _compare_bool(a <= b, i <= j, a, b, "<=");
+			error_count += _compare_bool(a > b, i > j, a, b, ">");
+			error_count += _compare_bool(a >= b, i >= j, a, b, ">=");
 
-			error_count += compare_str(-a + b, -i + j, -a, b, "+");
-			error_count += compare_str(b + -a, j + -i, b, -a, "+");
-			error_count += compare_str(-a - b, -i - j, -a, b, "-");
-			error_count += compare_str(b - -a, j - -i, b, -a, "-");
-			//error_count += compare_str(-a * b, -i * j, -a, b, "*");
-			//error_count += compare_str(b * -a, j * -i, b, -a, "*");
-			error_count += compare_bool(-a == b, -i == j, -a, b, "==");
-			error_count += compare_bool(-a != b, -i != j, -a, b, "!=");
-			error_count += compare_bool(-a < b, -i < j, -a, b, "<");
-			error_count += compare_bool(-a <= b, -i <= j, -a, b, "<=");
-			error_count += compare_bool(-a > b, -i > j, -a, b, ">");
-			error_count += compare_bool(-a >= b, -i >= j, -a, b, ">=");
+			error_count += _compare_str(-a + b, -i + j, -a, b, "+");
+			error_count += _compare_str(b + -a, j + -i, b, -a, "+");
+			error_count += _compare_str(-a - b, -i - j, -a, b, "-");
+			error_count += _compare_str(b - -a, j - -i, b, -a, "-");
+			error_count += _compare_str(-a * b, -i * j, -a, b, "*");
+			error_count += _compare_str(b * -a, j * -i, b, -a, "*");
+			error_count += _compare_bool(-a == b, -i == j, -a, b, "==");
+			error_count += _compare_bool(-a != b, -i != j, -a, b, "!=");
+			error_count += _compare_bool(-a < b, -i < j, -a, b, "<");
+			error_count += _compare_bool(-a <= b, -i <= j, -a, b, "<=");
+			error_count += _compare_bool(-a > b, -i > j, -a, b, ">");
+			error_count += _compare_bool(-a >= b, -i >= j, -a, b, ">=");
 
-			error_count += compare_bool(a == -b, i == -j, a, -b, "==");
-			error_count += compare_bool(a != -b, i != -j, a, -b, "!=");
-			error_count += compare_bool(a < -b, i < -j, a, -b, "<");
-			error_count += compare_bool(a <= -b, i <= -j, a, -b, "<=");
-			error_count += compare_bool(a > -b, i > -j, a, -b, ">");
-			error_count += compare_bool(a >= -b, i >= -j, a, -b, ">=");
+			error_count += _compare_bool(a == -b, i == -j, a, -b, "==");
+			error_count += _compare_bool(a != -b, i != -j, a, -b, "!=");
+			error_count += _compare_bool(a < -b, i < -j, a, -b, "<");
+			error_count += _compare_bool(a <= -b, i <= -j, a, -b, "<=");
+			error_count += _compare_bool(a > -b, i > -j, a, -b, ">");
+			error_count += _compare_bool(a >= -b, i >= -j, a, -b, ">=");
 
-			
-			error_count += compare_str((-(-a + b + a + a - b) - (b - b + a - a - a + b - a + b)), 
+			error_count += _compare_str((-(-a + b + a + a - b) - (b - b + a - a - a + b - a + b)), 
 				(-(-i + j + i + i - j) - (j - j + i - i - i + j - i + j)), a, b, " special1 ");
 
-			//error_count += compare_str((-(-a * (b + a) + a - b) * (b - b + a - (a * a) + b - a + b)),
-			//	(-(-i * (j + i) + i - j) * (j - j + i - (i * i) + j - i + j)), a, b, "special2");
-			
-				
-
+			error_count += _compare_str((-(-a * (b + a) + a - b) * (b - b + a - (a * a) + b - a + b)),
+				(-(-i * (j + i) + i - j) * (j - j + i - (i * i) + j - i + j)), a, b, "special2");
 		}
 		if (progress) std::cout << "Testing " << i << std::endl;
-		
 	}
 	std::cout << "Error count " << error_count << std::endl;
-	std::cout << "---------End of tests---------" << std::endl;
+	std::cout << "---------End of operations tests---------" << std::endl;
 }
 
 int main()
 {
-	//dummy_test();
+	input_tests();
 
-	tests(-200, 200, true);
+	dummy_test();
 
+	operations_tests(-100, 100, 0);
 
 	return 0;
 }

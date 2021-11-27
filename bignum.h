@@ -164,6 +164,14 @@ public:
     }
     BigNum& operator*=(const BigNum& rhs)
     {
+
+        if (m_number == "0" || rhs.m_number == "0")
+        {
+            m_number = "0";
+            m_positive = true;
+            return *this;
+        }
+
         if ((m_positive && rhs.m_positive) || (!m_positive && !rhs.m_positive))
         {
             m_positive = true;
@@ -173,12 +181,44 @@ public:
             m_positive = false;
         }
 
-        if (m_number == "0" || rhs.m_number == "0")
+        std::string num1{ m_number };
+        std::string num2{ rhs.m_number };
+
+        int64_t len1 = num1.length();
+        int64_t len2 = num2.length();
+
+        char zero = '0';
+        int64_t id1 = 0;
+        int64_t id2 = 0;
+        std::string result{ "" };
+        result.resize(len1 + len2, zero);
+
+        for (int64_t i = len1 - 1; i >= 0; i--)
         {
-            m_number = "0";
-            m_positive = true;
-            return *this;
+            int64_t carry = 0;
+            int64_t intermediate1 = num1[i] - zero;
+            id2 = 0;   
+
+            for (int64_t j = len2 - 1; j >= 0; j--)
+            {
+                int64_t intermediate2 = num2[j] - zero;
+                int64_t sum =  result[id1 + id2] - zero + intermediate1 * intermediate2 + carry;
+                result[id1 + id2] = sum % 10 + zero;
+                carry = sum / 10;
+                id2++;
+            }
+
+            if (carry > 0)
+            {
+                result[id1 + id2] += (char)carry;
+            }
+
+            id1++;
         }
+
+        reverse_and_delete_zero(result);
+
+        m_number = result;
 
         return *this;
     }
@@ -232,6 +272,22 @@ private:
         std::reverse(result.begin(), result.end());
 
         return result;
+    }
+
+    void reverse_and_delete_zero(std::string& result)
+    {
+        std::reverse(result.begin(), result.end());
+
+        size_t not_zero = result.find_first_not_of("0");
+        if (not_zero == std::string::npos)
+        {
+            result = "0";
+            m_positive = true;
+        }
+        else
+        {
+            result = result.substr(not_zero);
+        }
     }
 
     std::string help_sub(const BigNum& rhs)
@@ -289,8 +345,8 @@ private:
         int64_t carry = 0;
         char zero = '0';
 
-        reverse(num1.begin(), num1.end());
-        reverse(num2.begin(), num2.end());
+        std::reverse(num1.begin(), num1.end());
+        std::reverse(num2.begin(), num2.end());
 
         for (int64_t i = 0; i < len2; i++) {
             int64_t intermediate = ((num1[i] - zero) - (num2[i] - zero) - carry);
@@ -324,18 +380,7 @@ private:
             result.push_back((char)intermediate);
         }
 
-        reverse(result.begin(), result.end());
-
-        size_t not_zero = result.find_first_not_of("0");
-        if (not_zero == std::string::npos)
-        {
-            result = "0";
-            m_positive = true;
-        }
-        else
-        {
-            result = result.substr(not_zero);
-        }
+        reverse_and_delete_zero(result);
 
         return result;
     }
