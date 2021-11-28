@@ -132,6 +132,7 @@ public:
         std::string num1{ m_number };
         std::string num2{ rhs.m_number };
 
+        // Multiple cases of +
         if (m_positive && rhs.m_positive)
         {
             m_number = help_add(num1, num2);
@@ -156,6 +157,7 @@ public:
         std::string num1{ m_number };
         std::string num2{ rhs.m_number };
 
+        // Multiple cases of -
         if (m_positive && !rhs.m_positive)
         {
             m_number = help_add(num1, num2);
@@ -249,6 +251,7 @@ private:
 
     std::string help_add(std::string& num1, std::string& num2)
     {
+        // Function returning sum of 2 numbers
         if (num1.length() > num2.length())
         {
             std::swap(num1, num2);
@@ -289,6 +292,7 @@ private:
 
     void reverse_and_delete_zero(std::string& result)
     {
+        // Function reversing and deleting zeros from the beginning
         std::reverse(result.begin(), result.end());
 
         size_t not_zero = result.find_first_not_of("0");
@@ -305,6 +309,7 @@ private:
 
     std::string help_sub(const BigNum& rhs)
     {
+        // Function returning diff of 2 numbers
         std::string num1{ m_number };
         std::string num2{ rhs.m_number };
 
@@ -515,6 +520,7 @@ std::ostream& operator<<(std::ostream& lhs, const BigNum& rhs)
 #if SUPPORT_IFSTREAM == 1
 std::istream& operator>>(std::istream& lhs, BigNum& rhs) // bonus
 {
+    // Simulating int behavior
     std::string number(std::istreambuf_iterator<char>(lhs), {});
     std::string new_number = number;;
 
