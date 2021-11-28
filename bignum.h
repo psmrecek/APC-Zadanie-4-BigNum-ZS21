@@ -526,7 +526,7 @@ std::istream& operator>>(std::istream& lhs, BigNum& rhs) // bonus
         new_number = new_number.substr(1, new_number.length());
     }
 
-    int64_t first_not_num = new_number.find_first_not_of("0123456789");
+    uint64_t first_not_num = new_number.find_first_not_of("0123456789");
     if (first_not_num != std::string::npos && first_not_num != 0)
     {
         new_number = new_number.substr(0, first_not_num);
