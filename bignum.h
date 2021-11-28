@@ -20,8 +20,8 @@ private:
 
 //#define SUPPORT_DIVISION 0 // define as 1 when you have implemented the division
 #define SUPPORT_IFSTREAM 1 // define as 1 when you have implemented the input >>
-//
-//// if you do not plan to implement bonus, just delete those lines
+
+// if you do not plan to implement bonus, just delete those lines
 class BigNum final
 {
 public:
