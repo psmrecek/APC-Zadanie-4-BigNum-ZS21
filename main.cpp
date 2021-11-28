@@ -377,11 +377,11 @@ int main()
 {
 	input_tests();
 
-	//dummy_test();
+	dummy_test();
 
-	//operations_tests(-1000, 1000, 0);
+	operations_tests(-1000, 1000, 0);
 
-	//bonus_stream_test();
+	bonus_stream_test();
 
 	return 0;
 }
