@@ -4,9 +4,22 @@
 #include <string>
 #include <stdint.h>
 #include <iostream>
+#include <exception>
+
+class BigNumException : public std::exception {
+public:
+    explicit BigNumException(const char* message) : m_message{ message } {}
+    const char* what() const noexcept override {
+        return m_message;
+    }
+
+private:
+    const char* m_message;
+};
+
 
 //#define SUPPORT_DIVISION 0 // define as 1 when you have implemented the division
-//#define SUPPORT_IFSTREAM 0 // define as 1 when you have implemented the input >>
+#define SUPPORT_IFSTREAM 1 // define as 1 when you have implemented the input >>
 //
 //// if you do not plan to implement bonus, just delete those lines
 class BigNum final
@@ -63,13 +76,13 @@ public:
             std::string new_str = str;
             if (ignore_first)
             {
-                if (str.length() == 1) throw "Unable to construct BigNum";
+                if (str.length() == 1) throw BigNumException("Unable to construct BigNum");
                 new_str = str.substr(1);
             }
 
             for (size_t i = 0; i < new_str.length(); i++)
             {
-                if (std::isdigit(new_str[i]) == 0) throw "Unable to construct BigNum";
+                if (std::isdigit(new_str[i]) == 0) throw BigNumException("Unable to construct BigNum");
             }
             size_t not_zero = new_str.find_first_not_of("0");
             if (not_zero == std::string::npos)
@@ -499,6 +512,43 @@ std::ostream& operator<<(std::ostream& lhs, const BigNum& rhs)
     return lhs;
 }
 
-//#if SUPPORT_IFSTREAM == 1
-//std::istream& operator>>(std::istream& lhs, BigNum& rhs); // bonus
-//#endif
+#if SUPPORT_IFSTREAM == 1
+std::istream& operator>>(std::istream& lhs, BigNum& rhs) // bonus
+{
+    std::string number(std::istreambuf_iterator<char>(lhs), {});
+    std::string new_number = number;;
+
+    bool ignore_first = (number[0] == '-') || (number[0] == '+');
+    bool negative = (number[0] == '-');
+
+    if (ignore_first)
+    {
+        new_number = new_number.substr(1, new_number.length());
+    }
+
+    int64_t first_not_num = new_number.find_first_not_of("0123456789");
+    if (first_not_num != std::string::npos && first_not_num != 0)
+    {
+        new_number = new_number.substr(0, first_not_num);
+    }
+
+    if (negative)
+    {
+        new_number = '-' + new_number;
+    }
+
+    try
+    {
+        BigNum bn{ new_number };
+        rhs = bn;
+    }
+    catch (const std::exception&)
+    {
+        BigNum bn{ 0 };
+        rhs = bn;
+        lhs.setstate(std::ios_base::failbit);
+    }
+
+    return lhs;
+}
+#endif

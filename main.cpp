@@ -19,25 +19,25 @@ void input_tests()
 	BigNum h("-8");
 	BigNum i("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
 	
-	try { BigNum j("-"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum k("+"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum l("a"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum m("-b"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum n("+c"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum j("-"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum k("+"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum l("a"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum m("-b"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum n("+c"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 	BigNum o("000000000000000000000");
 	BigNum p("000000000000000000000400");
-	try { BigNum q("000000000000000000000d"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum q("000000000000000000000d"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 	
 	BigNum r{ "7" };
 	BigNum s{ "-8" };
-	try { BigNum t{ "-" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum u{ "+" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum v{ "a" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum w{ "-b" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum x{ "+c" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum t{ "-" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum u{ "+" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum v{ "a" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum w{ "-b" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum x{ "+c" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 	BigNum y{ "000000000000000000000" };
 	BigNum z{ "000000000000000000000400" };
-	try { BigNum aa{ "000000000000000000000d" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum aa{ "000000000000000000000d" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 
 	BigNum ab;
 	BigNum ac = 0;
@@ -56,19 +56,19 @@ void input_tests()
 	BigNum an("-0");
 	BigNum ao{ "-0" };
 
-	try { BigNum ap(" 0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum aq("0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum ar(" +0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum as(" -0"); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum at("+0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum au("-0 "); std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum ap(" 0"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum aq("0 "); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ar(" +0"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum as(" -0"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum at("+0 "); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum au("-0 "); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 
-	try { BigNum av{ " 0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum aw{ "0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum ax{ " +0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum ay{ " -0" }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum az{ "+0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
-	try { BigNum ba{ "-0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (const char* mes) { mes; error_counter++; }
+	try { BigNum av{ " 0" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum aw{ "0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ax{ " +0" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ay{ " -0" }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum az{ "+0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ba{ "-0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 
 	if (error_counter != 24)
 	{
@@ -297,6 +297,50 @@ void operations_tests(int64_t start, int64_t end, bool progress=false)
 	std::cout << "---------End of operations tests---------" << std::endl;
 }
 
+void _compare_stream(std::string str)
+{
+	std::stringstream ss1(str);
+	int a = 1;
+	ss1 >> a;
+
+	std::stringstream ss2(str);
+	BigNum b = 2;
+	ss2 >> b;
+
+	_compare_str_unary(b, a, a, "");
+	if (ss1.fail() != ss2.fail())
+	{
+		std::cout << "Failbit error" << std::endl;
+		std::cout << str << " " << a << " " << b << std::endl;
+	}
+
+}
+
+void bonus_stream_test()
+{
+	std::cout << "---------Start of stream tests---------" << std::endl;
+
+	for (int64_t i = -1000; i < 1000; i++)
+	{
+		_compare_stream(std::to_string(i));
+	}
+	
+	_compare_stream("-xyz");
+	_compare_stream("+xyz");
+	_compare_stream("-12z");
+	_compare_stream("+12z");
+	_compare_stream("-x1z");
+	_compare_stream("+x1z");
+	_compare_stream("xyz");
+	_compare_stream("xyz");
+	_compare_stream("12z");
+	_compare_stream("12z");
+	_compare_stream("x1z");
+	_compare_stream("x1z");
+
+	std::cout << "---------End of stream tests---------" << std::endl;
+}
+
 int main()
 {
 	input_tests();
@@ -304,6 +348,8 @@ int main()
 	dummy_test();
 
 	operations_tests(-1000, 1000, 0);
+
+	bonus_stream_test();
 
 	return 0;
 }
