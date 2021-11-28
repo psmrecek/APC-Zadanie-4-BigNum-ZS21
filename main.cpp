@@ -70,7 +70,39 @@ void input_tests()
 	try { BigNum az{ "+0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 	try { BigNum ba{ "-0 " }; std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
 
-	if (error_counter != 24)
+	BigNum bb{ +123 };
+	BigNum bc{ 123 };
+	BigNum bd{ -123 };
+	BigNum be{ +000123 };
+	BigNum bf{ 000123 };
+	BigNum bg{ -000123 };
+	BigNum bh{ +0000 };
+	BigNum bi{ 0000 };
+	BigNum bj{ -0000 };
+	BigNum bk{ -0 };
+	BigNum bl{ 0 };
+	BigNum bm{ +0 };
+
+	try { BigNum bn("+123w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bo("123w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bp("-123w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bq("+w123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum br("w123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bs("-w123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bt("+1w23"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bu("1w23"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bv("-1w23"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bw("+0w00123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bx("0w00123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum by("-0w00123"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum bz("+00w00"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ca("00w00"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum cb("-00w00"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum cc("+0000w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum cd("0000w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+	try { BigNum ce("-0000w"); std::cout << "You shouldn't see this" << std::endl; } catch (std::exception& e) { e; error_counter++; }
+
+	if (error_counter != 42)
 	{
 		std::cout << "Some errors unhandled" << std::endl;
 	}
@@ -345,11 +377,11 @@ int main()
 {
 	input_tests();
 
-	dummy_test();
+	//dummy_test();
 
-	operations_tests(-1000, 1000, 0);
+	//operations_tests(-1000, 1000, 0);
 
-	bonus_stream_test();
+	//bonus_stream_test();
 
 	return 0;
 }
