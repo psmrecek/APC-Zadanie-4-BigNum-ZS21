@@ -1,5 +1,7 @@
 # APC-Zadanie-4-BigNum-ZS21
 
+Oficiálny text zadania (Koscelanský).
+
 Implementujte triedu pre reprezentáciu celého čísla s ľubovoľnou presnosťou. Implementáciu samozrejme nechávam na vás, no nejde mi o efektívnosť implementácie, za to budú až bonusové body . Názov triedy bude BigNum a podporovať nasledovné operácie. Stiahnite si hlavičkový súbor a doplňte do neho implementáciu. Potom odovzdajte iba tento súbor (hlavne tam nedávajte žiadnu funkciu main).
 
 Konštruktory
